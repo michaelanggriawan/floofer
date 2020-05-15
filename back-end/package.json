@@ -1,0 +1,39 @@
+{
+  "name": "floofer-back-end",
+  "scripts": {
+    "start": "node node_modules/.build",
+    "dev": "nexus dev",
+    "build": "nexus build",
+    "typegen": "nexus build",
+    "typecheck": "tsc --noEmit -p .",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
+    "lint": "eslint --max-warnings 0 \"src/**/*.{ts,tsx}\"",
+    "jest": "jest --coverage --passWithNoTests",
+    "test": "yarn typegen && yarn lint && yarn typecheck && yarn format:check && yarn jest"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "nexus": "^0.21.0",
+    "nexus-plugin-prisma": "^0.8.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.2.2",
+    "@types/node": "^14.0.1",
+    "eslint": "^7.0.0",
+    "eslint-config-kodefox": "^0.2.2",
+    "jest": "^26.0.1",
+    "prettier": "^2.0.5",
+    "ts-jest": "^25.5.1",
+    "typescript": "^3.9.2"
+  },
+  "eslintConfig": {
+    "extends": "kodefox/react-native"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all",
+    "arrowParens": "always"
+  },
+  "private": true
+}
