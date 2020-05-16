@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
+    "lib": ["esnext"],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "downlevelIteration": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "rootDir": "."
+  },
+  "include": ["."]
+}

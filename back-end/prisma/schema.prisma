@@ -1,0 +1,29 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator prisma_client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id          String      @id @default(cuid())
+  name        String
+  email       String      @unique
+  password    String
+  phoneNum    String      @unique
+  city        String
+  address     String
+  details     String
+  photo       String
+  preference  Preference  @default(ALL)
+}
+
+enum Preference{
+  CAT
+  DOG
+  ALL
+}
+
+// Coming soon
