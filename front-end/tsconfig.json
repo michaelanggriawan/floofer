@@ -10,5 +10,6 @@
     "downlevelIteration": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "include": ["src/types/fonts.d.ts"]
 }
