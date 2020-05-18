@@ -1,9 +1,11 @@
+// This is your Prisma schema file,
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator prisma_client {
+generator client {
   provider = "prisma-client-js"
 }
 
@@ -13,11 +15,73 @@ model User {
   email       String      @unique
   password    String
   phoneNum    String      @unique
-  city        String
-  address     String
-  details     String
-  photo       String
+  city        String?
+  address     String?
+  details     String?
+  photo       String?
   preference  Preference  @default(ALL)
+}
+
+model Pet{
+  id        String    @id @default(cuid())
+  name      String
+  category  Category  @default(DOG)
+  gender    Gender    @default(MALE)
+  breed     String
+  bio       String
+  age       Int
+  photo     Photo[]
+  owner     User      @relation(fields:[userID] , references: [id]) 
+  userID    String
+  active    Active
+}
+
+model Photo{
+  id        String  @id @default(cuid())
+  photoUrl  String  @unique
+  pet       Pet     @relation(fields: [petID], references: [id])
+  petID     String
+}
+
+model Match{
+  id          String    @id @default(cuid())
+  pet         Pet       @relation(fields: [petID], references: [id])
+  petID       String
+  user        User      @relation(fields:[userID] , references: [id]) 
+  userID      String
+  status      Status
+}
+
+model Notification{
+  id        String       @id @default(cuid())
+  userType  UserType     @default(USER)
+  user      User?        @relation(fields:[userID] , references: [id]) 
+  userID    String?
+  pet       Pet?         @relation(fields: [petID], references: [id])
+  petID     String?
+  message   String
+  date      DateTime     @default(now())
+}
+
+enum Status{
+  LIKED
+  DISLIKED
+  MATCH
+}
+
+enum Active{
+  ACTIVE
+  INACTIVE
+}
+
+enum Category{
+  CAT
+  DOG
+}
+
+enum Gender{
+  MALE
+  FEMALE
 }
 
 enum Preference{
@@ -26,4 +90,7 @@ enum Preference{
   ALL
 }
 
-// Coming soon
+enum UserType{
+  USER
+  PET
+}

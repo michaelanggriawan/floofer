@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+
+datasource db {
+  provider = "postgresql"
+  url = "***"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id          String      @id @default(cuid())
+  name        String
+  email       String      @unique
+  password    String
+  phoneNum    String      @unique
+  city        String?
+  address     String?
+  details     String?
+  photo       String?
+  preference  Preference  @default(ALL)
+}
+
+enum Preference{
+  CAT
+  DOG
+  ALL
+}
+
+model Pet{
+  id        String    @id @default(cuid())
+  name      String
+  category  category  @default(DOG)
+  gender    gender    @default(MALE)
+  breed     String
+  bio       String
+  age       Int
+  photo     Photo[]
+  owner     User      @relation(fields:[user_id] , references: [id]) 
+  user_id   String
+  active    Active
+}
+
+model Photo{
+  id        String  @id @default(cuid())
+  photo_url String  @unique
+  pet       Pet     @relation(fields: [pet_id], references: [id])
+  pet_id    String
+}
+
+enum Active{
+  ACTIVE
+  INACTIVE
+}
+
+enum category{
+  CAT
+  DOG
+}
+
+enum gender{
+  MALE
+  FEMALE
+}
+
+model Match{
+  id          String    @id @default(cuid())
+  pet         Pet       @relation(fields: [pet_id], references: [id])
+  pet_id      String
+  user        User      @relation(fields:[user_id] , references: [id]) 
+  user_id     String
+  status      Status
+}
+
+enum Status{
+  LIKED
+  DISLIKED
+  MATCH
+}
+
+model Notification{
+  id        String       @id @default(cuid())
+  ser_type  User_type    @default(USER)
+  user      User?        @relation(fields:[user_id] , references: [id]) 
+  user_id   String?
+  pet       Pet?         @relation(fields: [pet_id], references: [id])
+  pet_id    String?
+  message   String
+  date      DateTime     @default(now())
+}
+
+enum User_type{
+  USER
+  PET
+}
